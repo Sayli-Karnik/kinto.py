@@ -369,7 +369,7 @@ class CollectionTest(unittest.TestCase):
                 if_not_exists=True)
 
     def test_create_collection_raises_a_special_error_on_403(self):
-        install_http_error(self.session, status=403)
+        self.session.request.side_effect = get_http_error(status=403)
         with self.assertRaises(KintoException) as e:
             self.client.create_collection(
                 bucket="buck",
